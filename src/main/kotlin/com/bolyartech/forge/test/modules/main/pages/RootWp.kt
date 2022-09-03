@@ -1,12 +1,14 @@
 package com.bolyartech.forge.test.modules.main.pages
 
-import com.bolyartech.forge.server.handler.RouteHandler
-import com.bolyartech.forge.server.response.PlainTextResponse
-import com.bolyartech.forge.server.response.Response
+import com.bolyartech.forge.server.handler.WebPage
+import com.bolyartech.forge.server.misc.TemplateEngine
+import com.bolyartech.forge.server.misc.TemplateEngineFactory
 import com.bolyartech.forge.server.route.RequestContext
 
-class RootWp : RouteHandler {
-    override fun handle(ctx: RequestContext): Response {
-        return PlainTextResponse("<h1>This server is operational!</h1>")
+class RootWp(templateEngineFactory: TemplateEngineFactory): WebPage(templateEngineFactory) {
+
+    override fun produceHtml(ctx: RequestContext, tple: TemplateEngine): String {
+        tple.export("_page", "root")
+        return tple.render("template.vm")
     }
 }

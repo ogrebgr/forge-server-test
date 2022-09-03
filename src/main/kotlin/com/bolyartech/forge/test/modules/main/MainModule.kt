@@ -1,9 +1,11 @@
 package com.bolyartech.forge.test.modules.main
 
 import com.bolyartech.forge.server.HttpMethod
+import com.bolyartech.forge.server.misc.VelocityTemplateEngineFactory
 import com.bolyartech.forge.server.module.SiteModule
 import com.bolyartech.forge.server.route.Route
 import com.bolyartech.forge.server.route.RouteSimple
+import com.bolyartech.forge.test.modules.main.pages.PlainTextWp
 import com.bolyartech.forge.test.modules.main.pages.RootWp
 
 class MainModule : SiteModule {
@@ -17,7 +19,11 @@ class MainModule : SiteModule {
     override fun createRoutes(): List<Route> {
         val ret = mutableListOf<Route>()
 
-        ret.add(RouteSimple(HttpMethod.GET, PATH_PREFIX, RootWp()))
+        val map = mapOf<String, String>("event_handler.include.class" to "org.apache.velocity.app.event.implement.IncludeRelativePath")
+        val templateEngineFactory = VelocityTemplateEngineFactory("/templates/modules/main/", map)
+
+        ret.add(RouteSimple(HttpMethod.GET, PATH_PREFIX, RootWp(templateEngineFactory)))
+        ret.add(RouteSimple(HttpMethod.GET, PATH_PREFIX + "plaintext", PlainTextWp()))
 
         return ret
     }
