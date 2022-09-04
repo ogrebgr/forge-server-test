@@ -7,6 +7,6 @@ import com.bolyartech.forge.server.route.RequestContext
 
 class PlainTextWp : RouteHandler {
     override fun handle(ctx: RequestContext): Response {
-        return PlainTextResponse("<h1>This server is operational!</h1>")
+        return PlainTextResponse("<h1>PlainTextResponse demo!</h1>")
     }
 }

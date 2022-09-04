@@ -5,7 +5,7 @@ import com.bolyartech.forge.server.misc.TemplateEngine
 import com.bolyartech.forge.server.misc.TemplateEngineFactory
 import com.bolyartech.forge.server.route.RequestContext
 
-class RootWp(templateEngineFactory: TemplateEngineFactory): WebPage(templateEngineFactory) {
+class RootWp(templateEngineFactory: TemplateEngineFactory) : WebPage(templateEngineFactory) {
 
     override fun produceHtml(ctx: RequestContext, tple: TemplateEngine): String {
         tple.export("_page", "root")

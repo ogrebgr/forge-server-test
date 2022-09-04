@@ -5,12 +5,10 @@ import ch.qos.logback.classic.joran.JoranConfigurator
 import ch.qos.logback.core.joran.spi.JoranException
 import com.bolyartech.forge.server.ForgeSystemServlet
 import com.bolyartech.forge.server.config.ForgeConfigurationException
-import com.bolyartech.forge.server.jetty.ForgeJetty
 import com.bolyartech.forge.server.jetty.loadConfigurationPack
 import com.bolyartech.forge.server.module.SiteModuleRegisterImpl
 import com.bolyartech.forge.server.route.RouteRegisterImpl
 import com.bolyartech.forge.test.modules.main.MainModule
-import org.eclipse.jetty.server.session.NullSessionDataStoreFactory
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -41,8 +39,8 @@ fun main(args: Array<String>) {
         ),
     )
 
-    val server = ForgeJetty(confPack.forgeJettyConfiguration, forgeSystemServlet, NullSessionDataStoreFactory())
-    server.start()
+//    val server = WebServerJetty(confPack.forgeJettyConfiguration, forgeSystemServlet, NullSessionDataStoreFactory())
+//    server.start()
 }
 
 
