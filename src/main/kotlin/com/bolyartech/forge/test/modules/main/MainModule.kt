@@ -7,8 +7,9 @@ import com.bolyartech.forge.server.route.Route
 import com.bolyartech.forge.server.route.RouteSimple
 import com.bolyartech.forge.test.modules.main.pages.PlainTextWp
 import com.bolyartech.forge.test.modules.main.pages.RootWp
+import javax.inject.Inject
 
-class MainModule : SiteModule {
+class MainModule @Inject constructor() : SiteModule {
     companion object {
         private const val MODULE_SYSTEM_NAME = "main"
         private const val MODULE_VERSION_CODE = 1

@@ -2,7 +2,8 @@ package com.bolyartech.forge.test
 
 import com.bolyartech.forge.server.ForgeServer
 import com.bolyartech.forge.server.config.ForgeConfigurationException
-import com.bolyartech.forge.test.modules.MyJettyServer
+import com.bolyartech.forge.test.dagger.DaggerMyDaggerComponent
+import com.bolyartech.forge.test.dagger.ServerDaggerModule
 import org.slf4j.LoggerFactory
 import java.nio.file.FileSystems
 
@@ -17,6 +18,6 @@ fun main(args: Array<String>) {
         return
     }
 
-    val myServer = MyJettyServer()
-    myServer.start(configPack)
+    val server = DaggerMyDaggerComponent.builder().serverDaggerModule(ServerDaggerModule(configPack)).build().provideServer()
+    server.start(configPack)
 }
