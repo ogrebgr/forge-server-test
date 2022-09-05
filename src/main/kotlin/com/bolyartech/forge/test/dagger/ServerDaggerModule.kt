@@ -2,6 +2,8 @@ package com.bolyartech.forge.test.dagger
 
 
 import com.bolyartech.forge.server.ForgeServer
+import com.bolyartech.forge.server.misc.MimeTypeResolver
+import com.bolyartech.forge.server.misc.MimeTypeResolverImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Qualifier
@@ -17,6 +19,11 @@ class ServerDaggerModule(private val forgeConfig: ForgeServer.ConfigurationPack)
     @Provides
     fun provideConfigurationPack(): ForgeServer.ConfigurationPack {
         return forgeConfig
+    }
+
+    @Provides
+    fun provideMimeTypeResolver() : MimeTypeResolver {
+        return MimeTypeResolverImpl()
     }
 }
 

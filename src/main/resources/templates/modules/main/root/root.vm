@@ -2,4 +2,5 @@
 <p>Pages:</p>
 <ul>
     <li><a href="/plaintext">Plain text</a></li>
+    <li><a href="/static_html.html">Static HTML file</a></li>
 </ul>
