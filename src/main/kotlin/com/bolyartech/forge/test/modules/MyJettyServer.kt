@@ -42,7 +42,8 @@ class MyJettyServer : AbstractForgeServerAdapter() {
             PlainTextWp(),
             PathInfoWp(tplef),
             MyConfWp(tplef, myConf),
-            UserUploadWp(tplef, fileSystem, forgeConfig.forgeServerConfiguration.uploadsDirectory)
+            UserUploadWp(tplef, fileSystem, forgeConfig.forgeServerConfiguration.uploadsDirectory),
+            UserDownloadWp(tplef, forgeConfig.forgeServerConfiguration.downloadsDirectory)
         )
 
         return listOf(mainModule)

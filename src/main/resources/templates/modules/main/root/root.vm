@@ -6,4 +6,5 @@
     <li><a href="/pathinfo/45/11/12">Path Info</a></li>
     <li><a href="/myconfig">My configuration loading (my.conf)</a></li>
     <li><a href="/user_upload">User file upload</a></li>
+    <li><a href="/user_download">User file download</a></li>
 </ul>

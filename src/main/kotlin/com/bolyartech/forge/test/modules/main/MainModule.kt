@@ -20,6 +20,7 @@ class MainModule @Inject constructor(
     private val pathInfoWp: PathInfoWp,
     private val myConfWp: MyConfWp,
     private val userUploadWp: UserUploadWp,
+    private val userDownloadWp: UserDownloadWp,
 ) : SiteModule {
 
     companion object {
@@ -41,10 +42,11 @@ class MainModule @Inject constructor(
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "myconfig", myConfWp))
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "user_upload", userUploadWp))
         ret.add(RouteExact(HttpMethod.POST, PATH_PREFIX + "user_upload", userUploadWp))
-        // TODO - upload
+        ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "user_download", userDownloadWp))
         // TODO - download
         // TODO - form
-        // TODO - redir
+        // Web page db
+        // Endpoints
         ret.add(RouteFlexible(HttpMethod.GET, PATH_PREFIX, StaticFileHandler("$staticFileDir/main", mimeTypeResolver)))
 
         return ret
