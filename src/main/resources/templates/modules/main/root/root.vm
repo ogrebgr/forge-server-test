@@ -7,4 +7,5 @@
     <li><a href="/myconfig">My configuration loading (my.conf)</a></li>
     <li><a href="/user_upload">User file upload</a></li>
     <li><a href="/user_download">User file download</a></li>
+    <li><a href="/list_db">DB ops</a></li>
 </ul>

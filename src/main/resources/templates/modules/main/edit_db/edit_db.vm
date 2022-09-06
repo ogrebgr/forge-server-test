@@ -1,0 +1,11 @@
+<form action="/edit_db" method="post" name="test">
+    <label for="field_string">String field</label>
+    <input type="text" maxlength="20" size="20" name="field_string" id="field_string" required="required" value="$!item.fieldString">
+    <br/>
+    <br/>
+    <label for="field_int">Int field</label>
+    <input type="text" maxlength="10" size="10" name="field_int" id="field_int" required="required" value="$!item.fieldInt">
+    <br/>
+    <br/>
+    <input class="form_submit" name="submit" type="submit" value="Save"/>
+</form>

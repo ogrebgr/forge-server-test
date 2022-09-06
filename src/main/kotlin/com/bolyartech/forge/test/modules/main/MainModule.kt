@@ -21,6 +21,8 @@ class MainModule @Inject constructor(
     private val myConfWp: MyConfWp,
     private val userUploadWp: UserUploadWp,
     private val userDownloadWp: UserDownloadWp,
+    private val listDbWp: ListDbWp,
+    private val editDbWp: EditDbWp,
 ) : SiteModule {
 
     companion object {
@@ -43,6 +45,9 @@ class MainModule @Inject constructor(
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "user_upload", userUploadWp))
         ret.add(RouteExact(HttpMethod.POST, PATH_PREFIX + "user_upload", userUploadWp))
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "user_download", userDownloadWp))
+        ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "list_db", listDbWp))
+        ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "edit_db", editDbWp))
+        ret.add(RouteExact(HttpMethod.POST, PATH_PREFIX + "edit_db", editDbWp))
         // TODO - download
         // TODO - form
         // Web page db
