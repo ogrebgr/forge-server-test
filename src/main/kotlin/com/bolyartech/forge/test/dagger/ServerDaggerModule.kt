@@ -4,6 +4,8 @@ package com.bolyartech.forge.test.dagger
 import com.bolyartech.forge.server.ForgeServer
 import com.bolyartech.forge.server.misc.MimeTypeResolver
 import com.bolyartech.forge.server.misc.MimeTypeResolverImpl
+import com.bolyartech.forge.server.misc.TemplateEngineFactory
+import com.bolyartech.forge.server.misc.VelocityTemplateEngineFactory
 import dagger.Module
 import dagger.Provides
 import javax.inject.Qualifier
@@ -24,6 +26,13 @@ class ServerDaggerModule(private val forgeConfig: ForgeServer.ConfigurationPack)
     @Provides
     fun provideMimeTypeResolver() : MimeTypeResolver {
         return MimeTypeResolverImpl()
+    }
+
+    @Provides
+    fun providePublicTemplateEngineFactory(): TemplateEngineFactory {
+        val map =
+            mapOf<String, String>("event_handler.include.class" to "org.apache.velocity.app.event.implement.IncludeRelativePath")
+        return VelocityTemplateEngineFactory("/templates/modules/main/", map)
     }
 }
 

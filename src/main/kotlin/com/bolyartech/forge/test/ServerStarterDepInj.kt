@@ -6,6 +6,7 @@ import com.bolyartech.forge.test.dagger.DaggerMyDaggerComponent
 import com.bolyartech.forge.test.dagger.ServerDaggerModule
 import org.slf4j.LoggerFactory
 import java.nio.file.FileSystems
+import kotlin.io.path.pathString
 
 fun main(args: Array<String>) {
     val logger = LoggerFactory.getLogger("my_server")
@@ -17,6 +18,8 @@ fun main(args: Array<String>) {
         logger.error("Cannot load forge.conf")
         return
     }
+
+    ForgeServer.initLog(logger, configPack.configurationDirectory.pathString, configPack.forgeServerConfiguration.serverLogName)
 
     val server = DaggerMyDaggerComponent.builder().serverDaggerModule(ServerDaggerModule(configPack)).build().provideServer()
     server.start(configPack)

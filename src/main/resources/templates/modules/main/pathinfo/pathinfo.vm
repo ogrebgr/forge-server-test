@@ -1,0 +1,7 @@
+<div>
+    <ul>
+        <li>Param 1: $param1</li>
+        <li>Param 2: $param2</li>
+        <li>Param 3: $param3</li>
+    </ul>
+</div>

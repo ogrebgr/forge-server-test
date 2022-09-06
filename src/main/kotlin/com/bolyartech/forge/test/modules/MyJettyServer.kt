@@ -7,8 +7,12 @@ import com.bolyartech.forge.server.WebServer
 import com.bolyartech.forge.server.db.DbConfiguration
 import com.bolyartech.forge.server.jetty.WebServerJetty
 import com.bolyartech.forge.server.misc.MimeTypeResolverImpl
+import com.bolyartech.forge.server.misc.VelocityTemplateEngineFactory
 import com.bolyartech.forge.server.module.SiteModule
 import com.bolyartech.forge.test.modules.main.MainModule
+import com.bolyartech.forge.test.modules.main.pages.PathInfoWp
+import com.bolyartech.forge.test.modules.main.pages.PlainTextWp
+import com.bolyartech.forge.test.modules.main.pages.RootWp
 import com.mchange.v2.c3p0.ComboPooledDataSource
 
 class MyJettyServer : AbstractForgeServerAdapter() {
@@ -21,7 +25,16 @@ class MyJettyServer : AbstractForgeServerAdapter() {
     }
 
     private fun createModules(staticFilesDir: String): List<SiteModule> {
-        val mainModule = MainModule(staticFilesDir, MimeTypeResolverImpl())
+        val map =
+            mapOf<String, String>("event_handler.include.class" to "org.apache.velocity.app.event.implement.IncludeRelativePath")
+        val tplef = VelocityTemplateEngineFactory("/templates/modules/main/", map)
+
+        val mainModule = MainModule(staticFilesDir,
+            MimeTypeResolverImpl(),
+            RootWp(tplef),
+            PlainTextWp(),
+            PathInfoWp(tplef))
+
         return listOf(mainModule)
     }
 }

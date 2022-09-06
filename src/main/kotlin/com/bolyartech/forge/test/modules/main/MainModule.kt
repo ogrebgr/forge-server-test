@@ -9,6 +9,7 @@ import com.bolyartech.forge.server.route.Route
 import com.bolyartech.forge.server.route.RouteFlexible
 import com.bolyartech.forge.server.route.RouteExact
 import com.bolyartech.forge.test.dagger.StaticFilesDir
+import com.bolyartech.forge.test.modules.main.pages.PathInfoWp
 import com.bolyartech.forge.test.modules.main.pages.PlainTextWp
 import com.bolyartech.forge.test.modules.main.pages.RootWp
 import javax.inject.Inject
@@ -16,7 +17,11 @@ import javax.inject.Inject
 class MainModule @Inject constructor(
     @StaticFilesDir private val staticFileDir: String,
     private val mimeTypeResolver: MimeTypeResolver,
-) : SiteModule {
+    private val rootWp: RootWp,
+    private val plainTextWp: PlainTextWp,
+    private val pathInfoWp: PathInfoWp,
+
+    ) : SiteModule {
 
     companion object {
         private const val MODULE_SYSTEM_NAME = "main"
@@ -31,8 +36,10 @@ class MainModule @Inject constructor(
         val map = mapOf<String, String>("event_handler.include.class" to "org.apache.velocity.app.event.implement.IncludeRelativePath")
         val templateEngineFactory = VelocityTemplateEngineFactory("/templates/modules/main/", map)
 
-        ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX, RootWp(templateEngineFactory)))
-        ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "plaintext", PlainTextWp()))
+        ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX, rootWp))
+        ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "plaintext", plainTextWp))
+        ret.add(RouteFlexible(HttpMethod.GET, PATH_PREFIX + "pathinfo/", pathInfoWp))
+
         ret.add(RouteFlexible(HttpMethod.GET, PATH_PREFIX, StaticFileHandler("$staticFileDir/main", mimeTypeResolver)))
 
         return ret
