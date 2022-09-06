@@ -9,7 +9,9 @@ import com.bolyartech.forge.server.jetty.WebServerJetty
 import com.bolyartech.forge.server.misc.MimeTypeResolverImpl
 import com.bolyartech.forge.server.misc.VelocityTemplateEngineFactory
 import com.bolyartech.forge.server.module.SiteModule
+import com.bolyartech.forge.test.misc.MyServerConfigurationLoaderFile
 import com.bolyartech.forge.test.modules.main.MainModule
+import com.bolyartech.forge.test.modules.main.pages.MyConfWp
 import com.bolyartech.forge.test.modules.main.pages.PathInfoWp
 import com.bolyartech.forge.test.modules.main.pages.PlainTextWp
 import com.bolyartech.forge.test.modules.main.pages.RootWp
@@ -21,19 +23,23 @@ class MyJettyServer : AbstractForgeServerAdapter() {
     }
 
     override fun createWebServer(forgeConfig: ForgeServer.ConfigurationPack, dbDataSource: ComboPooledDataSource): WebServer {
-        return WebServerJetty(forgeConfig, dbDataSource, createModules(forgeConfig.forgeServerConfiguration.staticFilesDir))
+        return WebServerJetty(forgeConfig, dbDataSource, createModules(forgeConfig))
     }
 
-    private fun createModules(staticFilesDir: String): List<SiteModule> {
+    private fun createModules(forgeConfig: ForgeServer.ConfigurationPack): List<SiteModule> {
         val map =
             mapOf<String, String>("event_handler.include.class" to "org.apache.velocity.app.event.implement.IncludeRelativePath")
         val tplef = VelocityTemplateEngineFactory("/templates/modules/main/", map)
 
-        val mainModule = MainModule(staticFilesDir,
+        val myConf = MyServerConfigurationLoaderFile(forgeConfig.configurationDirectory).load()
+
+        val mainModule = MainModule(forgeConfig.forgeServerConfiguration.staticFilesDir,
             MimeTypeResolverImpl(),
             RootWp(tplef),
             PlainTextWp(),
-            PathInfoWp(tplef))
+            PathInfoWp(tplef),
+            MyConfWp(tplef, myConf)
+        )
 
         return listOf(mainModule)
     }

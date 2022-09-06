@@ -4,6 +4,7 @@ import com.bolyartech.forge.server.ForgeServer
 import com.bolyartech.forge.server.config.ForgeConfigurationException
 import com.bolyartech.forge.test.dagger.DaggerMyDaggerComponent
 import com.bolyartech.forge.test.dagger.ServerDaggerModule
+import com.bolyartech.forge.test.misc.MyServerConfigurationLoaderFile
 import org.slf4j.LoggerFactory
 import java.nio.file.FileSystems
 import kotlin.io.path.pathString
@@ -21,6 +22,8 @@ fun main(args: Array<String>) {
 
     ForgeServer.initLog(logger, configPack.configurationDirectory.pathString, configPack.forgeServerConfiguration.serverLogName)
 
-    val server = DaggerMyDaggerComponent.builder().serverDaggerModule(ServerDaggerModule(configPack)).build().provideServer()
+    val myConf = MyServerConfigurationLoaderFile(configPack.configurationDirectory).load()
+
+    val server = DaggerMyDaggerComponent.builder().serverDaggerModule(ServerDaggerModule(configPack, myConf)).build().provideServer()
     server.start(configPack)
 }

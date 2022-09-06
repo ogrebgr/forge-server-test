@@ -9,6 +9,7 @@ import com.bolyartech.forge.server.route.Route
 import com.bolyartech.forge.server.route.RouteFlexible
 import com.bolyartech.forge.server.route.RouteExact
 import com.bolyartech.forge.test.dagger.StaticFilesDir
+import com.bolyartech.forge.test.modules.main.pages.MyConfWp
 import com.bolyartech.forge.test.modules.main.pages.PathInfoWp
 import com.bolyartech.forge.test.modules.main.pages.PlainTextWp
 import com.bolyartech.forge.test.modules.main.pages.RootWp
@@ -20,8 +21,8 @@ class MainModule @Inject constructor(
     private val rootWp: RootWp,
     private val plainTextWp: PlainTextWp,
     private val pathInfoWp: PathInfoWp,
-
-    ) : SiteModule {
+    private val myConfWp: MyConfWp,
+) : SiteModule {
 
     companion object {
         private const val MODULE_SYSTEM_NAME = "main"
@@ -39,7 +40,12 @@ class MainModule @Inject constructor(
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX, rootWp))
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "plaintext", plainTextWp))
         ret.add(RouteFlexible(HttpMethod.GET, PATH_PREFIX + "pathinfo/", pathInfoWp))
-
+        ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "myconfig", myConfWp))
+        // TODO - load conf value and show
+        // TODO - upload
+        // TODO - download
+        // TODO - form
+        // TODO - redir
         ret.add(RouteFlexible(HttpMethod.GET, PATH_PREFIX, StaticFileHandler("$staticFileDir/main", mimeTypeResolver)))
 
         return ret

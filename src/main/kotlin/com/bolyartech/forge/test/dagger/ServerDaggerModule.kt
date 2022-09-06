@@ -6,12 +6,13 @@ import com.bolyartech.forge.server.misc.MimeTypeResolver
 import com.bolyartech.forge.server.misc.MimeTypeResolverImpl
 import com.bolyartech.forge.server.misc.TemplateEngineFactory
 import com.bolyartech.forge.server.misc.VelocityTemplateEngineFactory
+import com.bolyartech.forge.test.misc.MyServerConfiguration
 import dagger.Module
 import dagger.Provides
 import javax.inject.Qualifier
 
 @Module
-class ServerDaggerModule(private val forgeConfig: ForgeServer.ConfigurationPack) {
+class ServerDaggerModule(private val forgeConfig: ForgeServer.ConfigurationPack, private val myConf: MyServerConfiguration) {
     @Provides
     @StaticFilesDir
     fun provideStaticFilesDir(): String {
@@ -33,6 +34,11 @@ class ServerDaggerModule(private val forgeConfig: ForgeServer.ConfigurationPack)
         val map =
             mapOf<String, String>("event_handler.include.class" to "org.apache.velocity.app.event.implement.IncludeRelativePath")
         return VelocityTemplateEngineFactory("/templates/modules/main/", map)
+    }
+
+    @Provides
+    fun provideMyServerConfiguration() : MyServerConfiguration {
+        return myConf
     }
 }
 
