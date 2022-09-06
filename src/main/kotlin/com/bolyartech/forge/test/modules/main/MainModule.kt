@@ -6,13 +6,10 @@ import com.bolyartech.forge.server.misc.MimeTypeResolver
 import com.bolyartech.forge.server.misc.VelocityTemplateEngineFactory
 import com.bolyartech.forge.server.module.SiteModule
 import com.bolyartech.forge.server.route.Route
-import com.bolyartech.forge.server.route.RouteFlexible
 import com.bolyartech.forge.server.route.RouteExact
+import com.bolyartech.forge.server.route.RouteFlexible
 import com.bolyartech.forge.test.dagger.StaticFilesDir
-import com.bolyartech.forge.test.modules.main.pages.MyConfWp
-import com.bolyartech.forge.test.modules.main.pages.PathInfoWp
-import com.bolyartech.forge.test.modules.main.pages.PlainTextWp
-import com.bolyartech.forge.test.modules.main.pages.RootWp
+import com.bolyartech.forge.test.modules.main.pages.*
 import javax.inject.Inject
 
 class MainModule @Inject constructor(
@@ -22,6 +19,7 @@ class MainModule @Inject constructor(
     private val plainTextWp: PlainTextWp,
     private val pathInfoWp: PathInfoWp,
     private val myConfWp: MyConfWp,
+    private val userUploadWp: UserUploadWp,
 ) : SiteModule {
 
     companion object {
@@ -41,7 +39,8 @@ class MainModule @Inject constructor(
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "plaintext", plainTextWp))
         ret.add(RouteFlexible(HttpMethod.GET, PATH_PREFIX + "pathinfo/", pathInfoWp))
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "myconfig", myConfWp))
-        // TODO - load conf value and show
+        ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "user_upload", userUploadWp))
+        ret.add(RouteExact(HttpMethod.POST, PATH_PREFIX + "user_upload", userUploadWp))
         // TODO - upload
         // TODO - download
         // TODO - form

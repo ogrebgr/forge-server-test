@@ -6,7 +6,7 @@ import com.bolyartech.forge.server.response.Response
 import com.bolyartech.forge.server.route.RequestContext
 import javax.inject.Inject
 
-class PlainTextWp @Inject constructor(): RouteHandler {
+class PlainTextWp @Inject constructor() : RouteHandler {
     override fun handle(ctx: RequestContext): Response {
         return PlainTextResponse("<h1>PlainTextResponse demo!</h1>")
     }

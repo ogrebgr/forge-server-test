@@ -5,6 +5,6 @@
     <title>Forge test server - #parse("${_page}/${_page}_title.vm" )</title>
 </head>
 <body>
-    #parse("${_page}/${_page}.vm" )
+#parse("${_page}/${_page}.vm" )
 </body>
 </html>

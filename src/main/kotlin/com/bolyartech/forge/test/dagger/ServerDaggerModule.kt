@@ -9,10 +9,22 @@ import com.bolyartech.forge.server.misc.VelocityTemplateEngineFactory
 import com.bolyartech.forge.test.misc.MyServerConfiguration
 import dagger.Module
 import dagger.Provides
+import java.nio.file.FileSystem
 import javax.inject.Qualifier
 
 @Module
-class ServerDaggerModule(private val forgeConfig: ForgeServer.ConfigurationPack, private val myConf: MyServerConfiguration) {
+class ServerDaggerModule(
+    private val fileSystem: FileSystem,
+    private val forgeConfig: ForgeServer.ConfigurationPack,
+    private val myConf: MyServerConfiguration
+) {
+
+
+    @Provides
+    fun provideFileSystem(): FileSystem {
+        return fileSystem
+    }
+
     @Provides
     @StaticFilesDir
     fun provideStaticFilesDir(): String {
@@ -25,7 +37,7 @@ class ServerDaggerModule(private val forgeConfig: ForgeServer.ConfigurationPack,
     }
 
     @Provides
-    fun provideMimeTypeResolver() : MimeTypeResolver {
+    fun provideMimeTypeResolver(): MimeTypeResolver {
         return MimeTypeResolverImpl()
     }
 
@@ -37,8 +49,20 @@ class ServerDaggerModule(private val forgeConfig: ForgeServer.ConfigurationPack,
     }
 
     @Provides
-    fun provideMyServerConfiguration() : MyServerConfiguration {
+    fun provideMyServerConfiguration(): MyServerConfiguration {
         return myConf
+    }
+
+    @Provides
+    @UploadsDir
+    fun provideUploadsDir(): String {
+        return forgeConfig.forgeServerConfiguration.uploadsDirectory
+    }
+
+    @Provides
+    @DownloadsDir
+    fun provideDownloadsDir(): String {
+        return forgeConfig.forgeServerConfiguration.downloadsDirectory
     }
 }
 
@@ -60,3 +84,10 @@ annotation class NotFoundHandler
 @Retention(AnnotationRetention.RUNTIME)
 annotation class InternalServerErrorHandler
 
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class UploadsDir
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class DownloadsDir

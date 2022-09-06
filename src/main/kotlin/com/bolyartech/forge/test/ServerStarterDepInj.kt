@@ -24,6 +24,10 @@ fun main(args: Array<String>) {
 
     val myConf = MyServerConfigurationLoaderFile(configPack.configurationDirectory).load()
 
-    val server = DaggerMyDaggerComponent.builder().serverDaggerModule(ServerDaggerModule(configPack, myConf)).build().provideServer()
-    server.start(configPack)
+    val server =
+        DaggerMyDaggerComponent.builder().serverDaggerModule(
+            ServerDaggerModule(FileSystems.getDefault(), configPack, myConf)
+        ).build().provideServer()
+
+    server.start(configPack, FileSystems.getDefault())
 }

@@ -8,10 +8,10 @@ import com.bolyartech.forge.server.jetty.WebServerJetty
 import com.bolyartech.forge.server.module.SiteModule
 import com.bolyartech.forge.test.modules.main.MainModule
 import com.mchange.v2.c3p0.ComboPooledDataSource
+import java.nio.file.FileSystem
 import javax.inject.Inject
 
 class MyJettyServerDepInj @Inject constructor(
-    forgeConfig: ForgeServer.ConfigurationPack,
     private val mainModule: MainModule
 ) : AbstractForgeServerAdapter() {
 
@@ -19,7 +19,11 @@ class MyJettyServerDepInj @Inject constructor(
         return ForgeServer.createDataSourceHelper(dbConfig)
     }
 
-    override fun createWebServer(forgeConfig: ForgeServer.ConfigurationPack, dbDataSource: ComboPooledDataSource): WebServer {
+    override fun createWebServer(
+        forgeConfig: ForgeServer.ConfigurationPack,
+        dbDataSource: ComboPooledDataSource,
+        fileSystem: FileSystem
+    ): WebServer {
         return WebServerJetty(forgeConfig, dbDataSource, createModules())
     }
 

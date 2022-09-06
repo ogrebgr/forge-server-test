@@ -5,4 +5,5 @@
     <li><a href="/static_html.html">Static HTML file</a></li>
     <li><a href="/pathinfo/45/11/12">Path Info</a></li>
     <li><a href="/myconfig">My configuration loading (my.conf)</a></li>
+    <li><a href="/user_upload">User file upload</a></li>
 </ul>

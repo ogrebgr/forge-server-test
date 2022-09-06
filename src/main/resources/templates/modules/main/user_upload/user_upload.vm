@@ -1,0 +1,9 @@
+<form action="/user_upload" enctype="multipart/form-data" method="post" name="test">
+    <input id="txt" name="text_field" required="required" size="50" type="text"/>
+    <br/>
+    <br/>
+    <input class="form" id="attachment_id" name="file_field" required="required" size="70" type="file"/>
+    <br/>
+    <br/>
+    <input class="form_submit" name="attachment_upload_submit" type="submit" value="Upload"/>
+</form>
