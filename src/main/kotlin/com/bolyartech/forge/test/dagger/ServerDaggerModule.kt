@@ -7,6 +7,7 @@ import com.bolyartech.forge.server.misc.MimeTypeResolverImpl
 import com.bolyartech.forge.server.misc.TemplateEngineFactory
 import com.bolyartech.forge.server.misc.VelocityTemplateEngineFactory
 import com.bolyartech.forge.test.misc.MyServerConfiguration
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import java.nio.file.FileSystem
@@ -63,6 +64,11 @@ class ServerDaggerModule(
     @DownloadsDir
     fun provideDownloadsDir(): String {
         return forgeConfig.forgeServerConfiguration.downloadsDirectory
+    }
+
+    @Provides
+    fun provideGson(): Gson {
+        return Gson()
     }
 }
 

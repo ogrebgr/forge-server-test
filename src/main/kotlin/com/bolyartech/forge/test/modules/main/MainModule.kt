@@ -9,6 +9,7 @@ import com.bolyartech.forge.server.route.Route
 import com.bolyartech.forge.server.route.RouteExact
 import com.bolyartech.forge.server.route.RouteFlexible
 import com.bolyartech.forge.test.dagger.StaticFilesDir
+import com.bolyartech.forge.test.modules.main.endpoints.ForgeEndpointEp
 import com.bolyartech.forge.test.modules.main.pages.*
 import javax.inject.Inject
 
@@ -23,6 +24,7 @@ class MainModule @Inject constructor(
     private val userDownloadWp: UserDownloadWp,
     private val listDbWp: ListDbWp,
     private val editDbWp: EditDbWp,
+    private val forgeEndpointEp: ForgeEndpointEp,
 ) : SiteModule {
 
     companion object {
@@ -48,10 +50,7 @@ class MainModule @Inject constructor(
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "list_db", listDbWp))
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "edit_db", editDbWp))
         ret.add(RouteExact(HttpMethod.POST, PATH_PREFIX + "edit_db", editDbWp))
-        // TODO - download
-        // TODO - form
-        // Web page db
-        // Endpoints
+        ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "forge_endpoint", forgeEndpointEp))
         ret.add(RouteFlexible(HttpMethod.GET, PATH_PREFIX, StaticFileHandler("$staticFileDir/main", mimeTypeResolver)))
 
         return ret

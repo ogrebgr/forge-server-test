@@ -13,7 +13,9 @@ import com.bolyartech.forge.server.module.SiteModule
 import com.bolyartech.forge.test.data.TestTableDbhImpl
 import com.bolyartech.forge.test.misc.MyServerConfigurationLoaderFile
 import com.bolyartech.forge.test.modules.main.MainModule
+import com.bolyartech.forge.test.modules.main.endpoints.ForgeEndpointEp
 import com.bolyartech.forge.test.modules.main.pages.*
+import com.google.gson.Gson
 import com.mchange.v2.c3p0.ComboPooledDataSource
 import java.nio.file.FileSystem
 
@@ -52,7 +54,8 @@ class MyJettyServer : AbstractForgeServerAdapter() {
             UserUploadWp(tplef, fileSystem, forgeConfig.forgeServerConfiguration.uploadsDirectory),
             UserDownloadWp(tplef, forgeConfig.forgeServerConfiguration.downloadsDirectory),
             ListDbWp(tplef, dbPool, TestTableDbhImpl()),
-            EditDbWp(tplef, dbPool, TestTableDbhImpl())
+            EditDbWp(tplef, dbPool, TestTableDbhImpl()),
+            ForgeEndpointEp(Gson()),
         )
 
         return listOf(mainModule)
