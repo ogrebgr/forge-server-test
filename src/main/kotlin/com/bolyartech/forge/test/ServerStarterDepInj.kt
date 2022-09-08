@@ -21,7 +21,7 @@ fun main(args: Array<String>) {
         return
     }
 
-    ForgeServer.initLog(logger, configPack.configurationDirectory.pathString, configPack.forgeServerConfiguration.serverLogName)
+    ForgeServer.initLog(logger, configPack.configurationDirectory.pathString, configPack.forgeServerConfiguration.logPrefix)
 
     val myConf = MyServerConfigurationLoaderFile(configPack.configurationDirectory).load()
 

@@ -7,6 +7,7 @@ import com.bolyartech.forge.server.misc.Params
 import com.bolyartech.forge.server.misc.TemplateEngine
 import com.bolyartech.forge.server.misc.TemplateEngineFactory
 import com.bolyartech.forge.server.response.BadRequestResponse
+import com.bolyartech.forge.server.response.HtmlResponse
 import com.bolyartech.forge.server.response.RedirectResponse303SeeOther
 import com.bolyartech.forge.server.response.Response
 import com.bolyartech.forge.server.route.MissingParameterValueException
@@ -60,6 +61,6 @@ class EditDbWp @Inject constructor(
 
     private fun common(tple: TemplateEngine): Response {
         tple.export("_page", "edit_db")
-        return createHtmlResponse(tple.render("template.vm"))
+        return HtmlResponse(tple.render("template.vm"))
     }
 }

@@ -19,7 +19,7 @@ fun main(args: Array<String>) {
         return
     }
 
-    initLog(logger, configPack.configurationDirectory.pathString, configPack.forgeServerConfiguration.serverLogName)
+    initLog(logger, configPack.configurationDirectory.pathString, configPack.forgeServerConfiguration.logPrefix)
 
     val myServer = MyJettyServer()
     myServer.start(configPack, FileSystems.getDefault())

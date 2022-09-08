@@ -4,6 +4,7 @@ import com.bolyartech.forge.server.db.DbPool
 import com.bolyartech.forge.server.handler.DbWebPage
 import com.bolyartech.forge.server.misc.TemplateEngine
 import com.bolyartech.forge.server.misc.TemplateEngineFactory
+import com.bolyartech.forge.server.response.HtmlResponse
 import com.bolyartech.forge.server.response.Response
 import com.bolyartech.forge.server.route.RequestContext
 import com.bolyartech.forge.test.data.TestTableDbh
@@ -21,7 +22,7 @@ class ListDbWp @Inject constructor(
         tple.export("items", items)
 
         tple.export("_page", "list_db")
-        return createHtmlResponse(tple.render("template.vm"))
+        return HtmlResponse(tple.render("template.vm"))
     }
 
 }

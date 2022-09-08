@@ -3,6 +3,7 @@ package com.bolyartech.forge.test.modules.main.pages
 import com.bolyartech.forge.server.handler.WebPage
 import com.bolyartech.forge.server.misc.TemplateEngine
 import com.bolyartech.forge.server.misc.TemplateEngineFactory
+import com.bolyartech.forge.server.response.HtmlResponse
 import com.bolyartech.forge.server.response.Response
 import com.bolyartech.forge.server.route.RequestContext
 import com.bolyartech.forge.test.misc.MyServerConfiguration
@@ -17,7 +18,7 @@ class MyConfWp @Inject constructor(
         tple.export("value", myConf.siteConfigParam)
 
         tple.export("_page", "my_conf")
-        return createHtmlResponse(tple.render("template.vm"))
+        return HtmlResponse(tple.render("template.vm"))
     }
 
 
