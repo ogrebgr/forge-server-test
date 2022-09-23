@@ -1,6 +1,6 @@
 package com.bolyartech.forge.test.modules.main.pages
 
-import com.bolyartech.forge.server.handler.RouteHandlerFlexible
+import com.bolyartech.forge.server.handler.RouteHandlerRuntimeResolved
 import com.bolyartech.forge.server.handler.WebPage
 import com.bolyartech.forge.server.misc.TemplateEngine
 import com.bolyartech.forge.server.misc.TemplateEngineFactory
@@ -11,7 +11,7 @@ import com.bolyartech.forge.server.route.RequestContext
 import javax.inject.Inject
 
 class PathInfoWp @Inject constructor(templateEngineFactory: TemplateEngineFactory) : WebPage(templateEngineFactory),
-    RouteHandlerFlexible {
+    RouteHandlerRuntimeResolved {
 
 
     override fun handlePage(ctx: RequestContext, tple: TemplateEngine): Response {

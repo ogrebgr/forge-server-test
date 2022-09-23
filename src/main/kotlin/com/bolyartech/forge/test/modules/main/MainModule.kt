@@ -7,7 +7,8 @@ import com.bolyartech.forge.server.misc.VelocityTemplateEngineFactory
 import com.bolyartech.forge.server.module.SiteModule
 import com.bolyartech.forge.server.route.Route
 import com.bolyartech.forge.server.route.RouteExact
-import com.bolyartech.forge.server.route.RouteFlexible
+import com.bolyartech.forge.server.route.RouteRuntimeResolved
+import com.bolyartech.forge.server.route.RouteStartsWith
 import com.bolyartech.forge.test.dagger.StaticFilesDir
 import com.bolyartech.forge.test.modules.main.endpoints.ForgeEndpointEp
 import com.bolyartech.forge.test.modules.main.pages.*
@@ -42,7 +43,7 @@ class MainModule @Inject constructor(
 
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX, rootWp))
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "plaintext", plainTextWp))
-        ret.add(RouteFlexible(HttpMethod.GET, PATH_PREFIX + "pathinfo/", pathInfoWp))
+        ret.add(RouteStartsWith(HttpMethod.GET, PATH_PREFIX + "pathinfo/", pathInfoWp))
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "myconfig", myConfWp))
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "user_upload", userUploadWp))
         ret.add(RouteExact(HttpMethod.POST, PATH_PREFIX + "user_upload", userUploadWp))
@@ -51,7 +52,8 @@ class MainModule @Inject constructor(
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "edit_db", editDbWp))
         ret.add(RouteExact(HttpMethod.POST, PATH_PREFIX + "edit_db", editDbWp))
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "forge_endpoint", forgeEndpointEp))
-        ret.add(RouteFlexible(HttpMethod.GET, PATH_PREFIX, StaticFileHandler("$staticFileDir/main", mimeTypeResolver)))
+        ret.add(RouteRuntimeResolved(HttpMethod.GET, PATH_PREFIX, StaticFileHandler("$staticFileDir/main", mimeTypeResolver)))
+        ret.add(RouteStartsWith(HttpMethod.GET, PATH_PREFIX + "static_html.html/", pathInfoWp))
 
         return ret
     }
