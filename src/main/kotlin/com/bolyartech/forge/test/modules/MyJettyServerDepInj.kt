@@ -24,7 +24,7 @@ class MyJettyServerDepInj @Inject constructor(
         dbDataSource: ComboPooledDataSource,
         fileSystem: FileSystem
     ): WebServer {
-        return WebServerJetty(forgeConfig, dbDataSource, createModules())
+        return WebServerJetty(forgeConfig, createModules())
     }
 
     private fun createModules(): List<SiteModule> {

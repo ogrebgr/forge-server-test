@@ -29,7 +29,7 @@ class MyJettyServer : AbstractForgeServerAdapter() {
         dbDataSource: ComboPooledDataSource,
         fileSystem: FileSystem
     ): WebServer {
-        return WebServerJetty(forgeConfig, dbDataSource, createModules(forgeConfig, fileSystem, dbDataSource))
+        return WebServerJetty(forgeConfig, createModules(forgeConfig, fileSystem, dbDataSource))
     }
 
     private fun createModules(
