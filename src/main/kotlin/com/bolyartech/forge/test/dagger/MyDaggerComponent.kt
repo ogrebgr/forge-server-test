@@ -1,6 +1,6 @@
 package com.bolyartech.forge.test.dagger
 
-import com.bolyartech.forge.test.modules.MyJettyServerDepInj
+import com.bolyartech.forge.test.MyJettyServerDepInj
 import dagger.Component
 import javax.inject.Singleton
 

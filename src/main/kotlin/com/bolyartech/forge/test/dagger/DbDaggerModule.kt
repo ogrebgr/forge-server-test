@@ -1,29 +1,29 @@
 package com.bolyartech.forge.test.dagger
 
 import com.bolyartech.forge.server.ForgeServer
-import com.bolyartech.forge.server.db.C3p0DbPool
-import com.bolyartech.forge.server.db.DbConfiguration
 import com.bolyartech.forge.server.db.DbPool
+import com.bolyartech.forge.server.db.HikariCpDbConfiguration
+import com.bolyartech.forge.server.db.HikariCpDbPool
 import com.bolyartech.forge.test.data.TestTableDbh
 import com.bolyartech.forge.test.data.TestTableDbhImpl
-import com.mchange.v2.c3p0.ComboPooledDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
+import javax.sql.DataSource
 
 @Module
-class DbDaggerModule(private val dbConfig: DbConfiguration) {
+class DbDaggerModule(private val dbConfig: HikariCpDbConfiguration) {
     @Provides
     @Singleton
-    fun provideComboPooledDataSource(): ComboPooledDataSource {
+    fun provideComboPooledDataSource(): DataSource {
         return ForgeServer.createDataSourceHelper(dbConfig)
     }
 
     @Provides
     @Singleton
-    internal fun provideDbPool(dbSource: ComboPooledDataSource): DbPool {
-        return C3p0DbPool(dbSource)
+    internal fun provideDbPool(dbSource: DataSource): DbPool {
+        return HikariCpDbPool(dbSource)
     }
 }
 

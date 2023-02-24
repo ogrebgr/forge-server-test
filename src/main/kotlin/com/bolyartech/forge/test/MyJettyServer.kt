@@ -1,11 +1,11 @@
-package com.bolyartech.forge.test.modules
+package com.bolyartech.forge.test
 
 import com.bolyartech.forge.server.AbstractForgeServerAdapter
 import com.bolyartech.forge.server.ForgeServer
 import com.bolyartech.forge.server.ForgeServer.Companion.createDataSourceHelper
 import com.bolyartech.forge.server.WebServer
-import com.bolyartech.forge.server.db.C3p0DbPool
-import com.bolyartech.forge.server.db.DbConfiguration
+import com.bolyartech.forge.server.db.DbPool
+import com.bolyartech.forge.server.db.HikariCpDbPool
 import com.bolyartech.forge.server.jetty.WebServerJetty
 import com.bolyartech.forge.server.misc.MimeTypeResolverImpl
 import com.bolyartech.forge.server.misc.VelocityTemplateEngineFactory
@@ -16,26 +16,30 @@ import com.bolyartech.forge.test.modules.main.MainModule
 import com.bolyartech.forge.test.modules.main.endpoints.ForgeEndpointEp
 import com.bolyartech.forge.test.modules.main.pages.*
 import com.google.gson.Gson
-import com.mchange.v2.c3p0.ComboPooledDataSource
 import java.nio.file.FileSystem
 
 class MyJettyServer : AbstractForgeServerAdapter() {
-    override fun createDbDataSource(dbConfig: DbConfiguration): ComboPooledDataSource {
-        return createDataSourceHelper(dbConfig)
-    }
+
+    private lateinit var dbPool: DbPool
 
     override fun createWebServer(
         forgeConfig: ForgeServer.ConfigurationPack,
-        dbDataSource: ComboPooledDataSource,
         fileSystem: FileSystem
     ): WebServer {
-        return WebServerJetty(forgeConfig, createModules(forgeConfig, fileSystem, dbDataSource))
+        dbPool = HikariCpDbPool(createDataSourceHelper(forgeConfig.dbConfiguration))
+        return WebServerJetty(forgeConfig, createModules(forgeConfig, fileSystem, dbPool))
+    }
+
+    override fun testDbConnection() {
+        dbPool.connection.use {
+            // just to check if it is successful
+        }
     }
 
     private fun createModules(
         forgeConfig: ForgeServer.ConfigurationPack,
         fileSystem: FileSystem,
-        dbDataSource: ComboPooledDataSource
+        dbPool: DbPool,
     ): List<SiteModule> {
         val map =
             mapOf<String, String>("event_handler.include.class" to "org.apache.velocity.app.event.implement.IncludeRelativePath")
@@ -43,7 +47,6 @@ class MyJettyServer : AbstractForgeServerAdapter() {
 
         val myConf = MyServerConfigurationLoaderFile(forgeConfig.configurationDirectory).load()
 
-        val dbPool = C3p0DbPool(dbDataSource)
         val mainModule = MainModule(
             forgeConfig.forgeServerConfiguration.staticFilesDir,
             MimeTypeResolverImpl(),

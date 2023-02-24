@@ -17,7 +17,7 @@ fun main(args: Array<String>) {
     val configPack = try {
         ForgeServer.loadConfigurationPack(FileSystems.getDefault(), args)
     } catch (e: ForgeConfigurationException) {
-        logger.error("Cannot load forge.conf: ${e.message}" )
+        logger.error("Cannot load forge.conf: ${e.message}")
         return
     }
 

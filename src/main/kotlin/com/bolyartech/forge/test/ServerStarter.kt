@@ -3,7 +3,6 @@ package com.bolyartech.forge.test
 import com.bolyartech.forge.server.ForgeServer
 import com.bolyartech.forge.server.ForgeServer.Companion.initLog
 import com.bolyartech.forge.server.config.ForgeConfigurationException
-import com.bolyartech.forge.test.modules.MyJettyServer
 import org.slf4j.LoggerFactory
 import java.nio.file.FileSystems
 import kotlin.io.path.pathString
