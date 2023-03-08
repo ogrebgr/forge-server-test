@@ -11,12 +11,14 @@ version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 kapt { correctErrorTypes = true }
 
 dependencies {
-    implementation project(':forge-server-jetty')
+    implementation 'com.bolyartech.forge.server:forge-server-jetty:21.0.0-alpha1'
+//    implementation project(':forge-server-jetty')
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.10'
     implementation 'org.slf4j:slf4j-api:2.0.3'
     implementation 'ch.qos.logback:logback-classic:1.4.4'
