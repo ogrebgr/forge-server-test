@@ -17,7 +17,7 @@ repositories {
 kapt { correctErrorTypes = true }
 
 dependencies {
-    implementation 'com.bolyartech.forge.server:forge-server-jetty:21.0.0-beta1'
+    implementation 'com.bolyartech.forge.server:forge-server-jetty:21.0.0'
 //    implementation project(':forge-server-jetty')
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.5.1'
     implementation 'org.slf4j:slf4j-api:2.0.3'
