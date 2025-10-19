@@ -5,17 +5,14 @@ import com.bolyartech.forge.server.handler.StaticFileHandler
 import com.bolyartech.forge.server.misc.MimeTypeResolver
 import com.bolyartech.forge.server.misc.VelocityTemplateEngineFactory
 import com.bolyartech.forge.server.module.SiteModule
-import com.bolyartech.forge.server.route.Route
-import com.bolyartech.forge.server.route.RouteExact
-import com.bolyartech.forge.server.route.RouteRuntimeResolved
-import com.bolyartech.forge.server.route.RouteStartsWith
+import com.bolyartech.forge.server.route.*
 import com.bolyartech.forge.test.dagger.StaticFilesDir
 import com.bolyartech.forge.test.modules.main.endpoints.ForgeEndpointEp
 import com.bolyartech.forge.test.modules.main.pages.*
 import javax.inject.Inject
 
 class MainModule @Inject constructor(
-    @StaticFilesDir private val staticFileDir: String,
+    @StaticFilesDir private val staticFilesDir: String,
     private val mimeTypeResolver: MimeTypeResolver,
     private val rootWp: RootWp,
     private val plainTextWp: PlainTextWp,
@@ -26,6 +23,8 @@ class MainModule @Inject constructor(
     private val listDbWp: ListDbWp,
     private val editDbWp: EditDbWp,
     private val forgeEndpointEp: ForgeEndpointEp,
+    private val trigger500Wp: Trigger500Wp,
+    private val trigger402Wp: Trigger402Wp,
 ) : SiteModule {
 
     companion object {
@@ -41,6 +40,8 @@ class MainModule @Inject constructor(
         val map = mapOf<String, String>("event_handler.include.class" to "org.apache.velocity.app.event.implement.IncludeRelativePath")
         val templateEngineFactory = VelocityTemplateEngineFactory("/templates/modules/main/", map)
 
+        addCommonRoutes(ret)
+
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX, rootWp))
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "plaintext", plainTextWp))
         ret.add(RouteStartsWith(HttpMethod.GET, PATH_PREFIX + "pathinfo/", pathInfoWp))
@@ -52,11 +53,48 @@ class MainModule @Inject constructor(
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "edit_db", editDbWp))
         ret.add(RouteExact(HttpMethod.POST, PATH_PREFIX + "edit_db", editDbWp))
         ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "forge_endpoint", forgeEndpointEp))
-        ret.add(RouteRuntimeResolved(HttpMethod.GET, PATH_PREFIX, StaticFileHandler("$staticFileDir/main", mimeTypeResolver)))
+        ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "trigger_500", trigger500Wp))
+        ret.add(RouteExact(HttpMethod.GET, PATH_PREFIX + "trigger_402", trigger402Wp))
+        ret.add(RouteRuntimeResolved(HttpMethod.GET, PATH_PREFIX, StaticFileHandler("$staticFilesDir/main", mimeTypeResolver)))
         ret.add(RouteStartsWith(HttpMethod.GET, PATH_PREFIX + "static_html.html/", pathInfoWp))
 
         return ret
     }
+
+    private fun addCommonRoutes(ret: MutableList<Route>) {
+        ret.add(
+            GetRouteExact(
+                "${PATH_PREFIX}robots.txt",
+                StaticFileHandler(staticFilesDir + "/main/robots.txt", mimeTypeResolver, true)
+            )
+        )
+        ret.add(
+            GetRouteExact(
+                "${PATH_PREFIX}favicon.ico",
+                StaticFileHandler(staticFilesDir + "/main/favicon.ico", mimeTypeResolver, true)
+            )
+        )
+
+        ret.add(
+            GetRouteRuntimeResolved(
+                "${PATH_PREFIX}img/",
+                StaticFileHandler(staticFilesDir + "/main/img/", mimeTypeResolver, true)
+            )
+        )
+        ret.add(
+            GetRouteRuntimeResolved(
+                "${PATH_PREFIX}css/",
+                StaticFileHandler(staticFilesDir + "/main/css/", mimeTypeResolver, true)
+            )
+        )
+        ret.add(
+            GetRouteRuntimeResolved(
+                "${PATH_PREFIX}js/",
+                StaticFileHandler(staticFilesDir + "/main/js/", mimeTypeResolver, true)
+            )
+        )
+    }
+
 
     override fun getSystemName(): String {
         return MODULE_SYSTEM_NAME

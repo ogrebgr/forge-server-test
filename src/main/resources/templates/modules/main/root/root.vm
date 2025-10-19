@@ -8,4 +8,6 @@
     <li><a href="/user_upload">User file upload</a></li>
     <li><a href="/user_download">User file download</a></li>
     <li><a href="/list_db">DB ops</a></li>
+    <li><a href="/trigger_500">Trigger HTTP 500</a></li>
+    <li><a href="/trigger_402">Trigger HTTP 402</a></li>
 </ul>

@@ -1,6 +1,6 @@
 package com.bolyartech.forge.test.dagger
 
-import com.bolyartech.forge.test.MyJettyServerDepInj
+import com.bolyartech.forge.test.MyJettyServer
 import dagger.Component
 import javax.inject.Singleton
 
@@ -12,5 +12,5 @@ import javax.inject.Singleton
         DbDaggerModuleBinds::class]
 )
 interface MyDaggerComponent {
-    fun provideServer(): MyJettyServerDepInj
+    fun provideServer(): MyJettyServer
 }
