@@ -37,3 +37,7 @@ tasks.distTar.enabled = false
 kotlin {
     jvmToolchain(17)
 }
+
+application {
+    mainClassName = 'com.bolyartech.forge.test.ServerStarterKt'
+}
