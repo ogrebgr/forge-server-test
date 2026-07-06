@@ -1,14 +1,14 @@
 <div>
     <a href="/edit_db">Add new record</a>
-    <br />
-    <br />
-    <br />
+    <br/>
+    <br/>
+    <br/>
     #if ($items.size() > 0)
-        <ul>
+    <ul>
         #foreach($item in $items)
-            <li>$item.fieldString - $item.fieldInt&nbsp;&nbsp;<a href="/edit_db?id=$item.id">Edit</a></li>
+        <li>$item.fieldString - $item.fieldInt&nbsp;&nbsp;<a href="/edit_db?id=$item.id">Edit</a></li>
         #end
-        </ul>
+    </ul>
     #else
     <p>No records found.</p>
     #end
