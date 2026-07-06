@@ -1,6 +1,7 @@
 package com.bolyartech.forge.test
 
 import com.bolyartech.forge.server.ForgeServer
+import com.bolyartech.forge.server.ForgeServer.Companion.initLogger
 import com.bolyartech.forge.server.config.ForgeConfigurationException
 import com.bolyartech.forge.test.dagger.DaggerMyDaggerComponent
 import com.bolyartech.forge.test.dagger.DbDaggerModule
@@ -8,7 +9,7 @@ import com.bolyartech.forge.test.dagger.ServerDaggerModule
 import com.bolyartech.forge.test.misc.MyServerConfigurationLoaderFile
 import org.slf4j.LoggerFactory
 import java.nio.file.FileSystems
-import kotlin.io.path.pathString
+import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
     val logger = LoggerFactory.getLogger("my_server")
@@ -21,15 +22,23 @@ fun main(args: Array<String>) {
         return
     }
 
-    ForgeServer.initLog(logger, configPack.configurationDirectory.pathString, configPack.forgeServerConfiguration.logPrefix)
+    // We need to initialize the logger here, i.e. before dependancy injection to avoid cluttering the log with messages from
+    // Velocity, DB, etc.
+    initLogger(
+        logger,
+        configPack.configurationDirectory,
+        configPack.forgeServerConfiguration.deployment.deploymentName,
+        configPack.forgeServerConfiguration.logPrefix,
+    )
 
     val myConf = MyServerConfigurationLoaderFile(configPack.configurationDirectory).load()
-
     val server =
         DaggerMyDaggerComponent.builder()
             .serverDaggerModule(ServerDaggerModule(FileSystems.getDefault(), configPack, myConf))
             .dbDaggerModule(DbDaggerModule(configPack.dbConfiguration))
             .build().provideServer()
 
-    server.start(configPack, FileSystems.getDefault())
+    if (!server.start(configPack, FileSystems.getDefault())) {
+        exitProcess(1)
+    }
 }
