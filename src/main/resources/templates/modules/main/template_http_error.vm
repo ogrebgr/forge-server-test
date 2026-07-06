@@ -11,15 +11,15 @@
         #end
     </title>
 </head>
-    <body>
-        <div style="text-align: center; display: flex; justify-content: center; flex-direction: column;">
-            <div>
-                #if ($_subdir)
-                #parse("${_subdir}/${_page}/${_page}.vm")
-                #else
-                #parse("${_page}/${_page}.vm")
-                #end
-            </div>
-        </div>
-    </body>
+<body>
+<div style="text-align: center; display: flex; justify-content: center; flex-direction: column;">
+    <div>
+        #if ($_subdir)
+        #parse("${_subdir}/${_page}/${_page}.vm")
+        #else
+        #parse("${_page}/${_page}.vm")
+        #end
+    </div>
+</div>
+</body>
 </html>
