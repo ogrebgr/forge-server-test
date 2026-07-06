@@ -1,0 +1,35 @@
+ext.getVersionCode = {
+    def propsFile = file('version.properties')
+    if (!propsFile.exists()) return "0" // Fallback if file doesn't exist
+
+    Properties props = new Properties()
+    propsFile.withInputStream { props.load(it) }
+    return props.getProperty('VERSION_CODE')
+}
+
+def propsFile = file("version.properties")
+tasks.register('incrementVersion') {
+    group = 'distribution'
+    description = 'Increments the VERSION_CODE in version.properties'
+
+    doLast {
+        Properties props = new Properties()
+
+        if (propsFile.exists()) {
+            propsFile.withInputStream { props.load(it) }
+        } else {
+            props.setProperty('VERSION_CODE', '0')
+        }
+
+        int currentCode = props.getProperty('VERSION_CODE').toInteger()
+        int newCode = currentCode + 1
+        props.setProperty('VERSION_CODE', newCode.toString())
+
+        propsFile.withOutputStream { props.store(it, null) }
+        println "Version incremented to: ${newCode}"
+    }
+}
+
+ext.getTimestamp = {
+    return new Date().format('yyyyMMddHHmm')
+}

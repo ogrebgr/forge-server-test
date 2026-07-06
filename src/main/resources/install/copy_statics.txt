@@ -1,0 +1,20 @@
+// This file contains code to be pasted in your build.gradle in order on build to
+// copy files form static directory like images, CSS, js, etc. to the build directory
+
+task copyStatic(type: Copy) {
+    from("src/main/static/")
+    into("$buildDir/static")
+}
+
+tasks.distTar.enabled = false
+
+distributions {
+    main {
+        contents {
+            from(copyStatic) {
+                into("static")
+            }
+        }
+    }
+}
+
