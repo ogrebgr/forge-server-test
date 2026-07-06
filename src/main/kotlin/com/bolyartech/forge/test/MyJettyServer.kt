@@ -16,8 +16,8 @@ import javax.inject.Inject
 class MyJettyServer @Inject constructor(
     private val mainModule: MainModule,
     private val dbPool: DbPool,
-    @NotFoundHandler private val notFoundHandler: RouteHandler,
-    @InternalServerErrorHandler private val internalServerErrorHandler: RouteHandler,
+    @param:NotFoundHandler private val notFoundHandler: RouteHandler,
+    @param:InternalServerErrorHandler private val internalServerErrorHandler: RouteHandler,
 ) : AbstractForgeServerAdapter() {
 
     override fun testDbConnection() {

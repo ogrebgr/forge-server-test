@@ -11,9 +11,9 @@ import javax.inject.Inject
 
 class UserDownloadWp @Inject constructor(
     templateEngineFactory: TemplateEngineFactory,
-    @DownloadsDir private val downloadsDir: String
+    @param:DownloadsDir private val downloadsDir: String
 ) : WebPage(templateEngineFactory) {
     override fun handlePage(ctx: RequestContext, tple: TemplateEngine): Response {
-        return FileUploadResponse(downloadsDir + "/test_file")
+        return FileUploadResponse("$downloadsDir/test_file")
     }
 }
