@@ -12,7 +12,6 @@ import com.bolyartech.forge.server.response.builders.BadRequestHtmlResponseBuild
 import com.bolyartech.forge.server.response.builders.HtmlResponseBuilder
 import com.bolyartech.forge.server.route.RequestContext
 import com.bolyartech.forge.test.misc.MyServerConfiguration
-import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import java.nio.file.FileSystem
@@ -50,7 +49,7 @@ class ServerDaggerModule(
     @Provides
     fun providePublicTemplateEngineFactory(): TemplateEngineFactory {
         val map =
-            mapOf<String, String>("event_handler.include.class" to "org.apache.velocity.app.event.implement.IncludeRelativePath")
+            mapOf("event_handler.include.class" to "org.apache.velocity.app.event.implement.IncludeRelativePath")
         return VelocityTemplateEngineFactory("/templates/modules/main/", map)
     }
 
@@ -69,11 +68,6 @@ class ServerDaggerModule(
     @DownloadsDir
     fun provideDownloadsDir(): String {
         return forgeConfig.forgeServerConfiguration.downloadsDirectory
-    }
-
-    @Provides
-    fun provideGson(): Gson {
-        return Gson()
     }
 
     @Provides
@@ -135,9 +129,7 @@ class ServerDaggerModule(
 
 
 @Module
-abstract class ServerDaggerModuleBinds {
-
-}
+abstract class ServerDaggerModuleBinds
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
