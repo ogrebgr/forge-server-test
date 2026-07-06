@@ -124,7 +124,7 @@ class TestTableDbhImpl @Inject constructor() : TestTableDbh {
             it.setValue(3, id)
 
             return if (it.executeUpdate() > 0) {
-                return TestTable(
+                TestTable(
                     id,
                     fieldString,
                     fieldInt
