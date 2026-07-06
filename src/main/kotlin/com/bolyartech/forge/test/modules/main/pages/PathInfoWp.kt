@@ -30,11 +30,7 @@ class PathInfoWp @Inject constructor(templateEngineFactory: TemplateEngineFactor
 
     override fun willingToHandle(pathInfo: String): Boolean {
         val params = pathInfo.split("/")
-        if (params.size != 3) {
-            return false
-        }
-
-        return true
+        return params.size == 3
     }
 
 }
