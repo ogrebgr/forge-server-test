@@ -5,7 +5,6 @@ import com.bolyartech.forge.server.handler.WebPage
 import com.bolyartech.forge.server.misc.TemplateEngine
 import com.bolyartech.forge.server.misc.TemplateEngineFactory
 import com.bolyartech.forge.server.misc.convertStreamToString
-import com.bolyartech.forge.server.misc.saveUploadedFile
 import com.bolyartech.forge.server.response.HtmlResponse
 import com.bolyartech.forge.server.response.RedirectResponse303SeeOther
 import com.bolyartech.forge.server.response.Response
@@ -39,7 +38,7 @@ class UserUploadWp @Inject constructor(
         val txtPart: Part = ctx.getPart("text_field") ?: throw MissingParameterValueException()
         val file: Part = ctx.getPart("file_field") ?: throw MissingParameterValueException()
 
-        saveUploadedFile(file.inputStream, fileSystem.getPath(uploadsDir, "uploaded_file"))
+        file.write(uploadsDir + "uploaded_file")
 
         return RedirectResponse303SeeOther("/user_upload_done?param=${convertStreamToString(txtPart.inputStream)}")
     }
