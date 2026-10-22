@@ -1,6 +1,7 @@
 package com.bolyartech.forge.test
 
 import com.bolyartech.forge.server.ForgeServer
+import com.bolyartech.forge.server.ForgeServer.Companion.initLogger
 import com.bolyartech.forge.server.config.ForgeConfigurationException
 import com.bolyartech.forge.test.dagger.DaggerMyDaggerComponent
 import com.bolyartech.forge.test.dagger.DbDaggerModule
@@ -21,7 +22,12 @@ fun main(args: Array<String>) {
         return
     }
 
-    ForgeServer.initLog(logger, configPack.configurationDirectory.pathString, configPack.forgeServerConfiguration.logPrefix)
+    initLogger(
+        logger,
+        configPack.configurationDirectory,
+        configPack.forgeServerConfiguration.deployment.deploymentName,
+        configPack.forgeServerConfiguration.logPrefix
+    )
 
     val myConf = MyServerConfigurationLoaderFile(configPack.configurationDirectory).load()
 
