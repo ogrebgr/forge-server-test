@@ -12,8 +12,7 @@ import javax.inject.Inject
 class MyConfWp @Inject constructor(
     templateEngineFactory: TemplateEngineFactory,
     private val myConf: MyServerConfiguration
-) :
-    WebPage(templateEngineFactory) {
+) : WebPage(templateEngineFactory) {
     override fun handlePage(ctx: RequestContext, tple: TemplateEngine): Response {
         tple.export("value", myConf.siteConfigParam)
 
