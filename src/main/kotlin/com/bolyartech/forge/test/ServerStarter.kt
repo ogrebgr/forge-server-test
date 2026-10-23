@@ -22,7 +22,7 @@ fun main(args: Array<String>) {
         return
     }
 
-    // We need to initialize the logger here, i.e. before dependancy injection to avoid cluttering the log with messages from
+    // We need to initialize the logger here, i.e. before dependency injection to avoid cluttering the log with messages from
     // Velocity, DB, etc.
     initLogger(
         logger,
